@@ -1,0 +1,37 @@
+server {
+listen 8081;   
+#root /var/www/html/malereal/desktop;
+#root /var/www/html/development/desktop;
+root /data/project/final/desktop;    
+index index.php index.html index.htm index.nginx-debian.html;     
+location / {
+        location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|tif|tiff|css|js|ttf|otf|webp|woff|txt|csv|rtf|doc|docx|xls|xlsx|ppt|pptx|odf|odp|ods|odt|pdf|psd|ai|eot|eps|ps|zip|tar|tgz|gz|rar|bz2|7z|aac|m4a|mp3|mp4|ogg|wav|wma|3gp|avi|flv|m4v|mkv|mov|mpeg|mpg|wmv|exe|iso|dmg|swf|woff2)$ {
+#                    expires        max;
+                                    expires 2m;
+                                    access_log off;
+                                    #add_header Pragma public;
+                                    add_header Cache-Control "no-cache";
+            }
+            fastcgi_param REQUEST_URI $uri$request_uri$args;
+            try_files $uri $uri/ /index.php?$args;
+    }
+location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+    }     location ~ /\.ht {
+            deny all;
+    }
+location /cuk14y4m {
+            alias /usr/share/phpmyadmin;
+            try_files $uri $uri/ @phpmyadmin;             location ~ .php$ {
+                    include snippets/fastcgi-php.conf;
+                    fastcgi_param SCRIPT_FILENAME $request_filename;
+                    fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+            }        location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|tif|tiff|css|js|ttf|otf|webp|woff|txt|csv|rtf|doc|docx|xls|xlsx|ppt|pptx|odf|odp|ods|odt|pdf|psd|ai|eot|eps|ps|zip|tar|tgz|gz|rar|bz2|7z|aac|m4a|mp3|mp4|ogg|wav|wma|3gp|avi|flv|m4v|mkv|mov|mpeg|mpg|wmv|exe|iso|dmg|swf|woff2)$ {
+         expires        max;
+            }
+    }
+location @phpmyadmin {
+            rewrite /cuk14y4m/(.*)$ /cuk14y4m/index.php?/$1 last;
+    }
+}
