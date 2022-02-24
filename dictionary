@@ -1,5 +1,7 @@
 server {
-listen 8018;     root /var/www/html/kamus-bahasa-gaul;    
+listen 8018;     
+
+root /var/www/html/kamus-bahasa-gaul;    
 index index.php index.html index.htm index.nginx-debian.html;
 #client_max_body_size 50M;     
 location / {
